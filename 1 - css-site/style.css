@@ -1,0 +1,100 @@
+.top-container {
+    background-color: #e4f9f5;
+    display: inline-block;
+    width: 100%;
+}
+
+h1 {
+    margin-top: 50px;
+    margin-bottom: 0px;
+    font-family: 'Sacramento', sans-serif;
+    font-size: 6rem;
+    color: #66BFBF;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: normal;
+    color: #66BFBF;
+}
+
+h3 {
+    color: #19999E;
+}
+
+body {
+    margin: 0px;
+    text-align: center;
+    font-family: helvetica, sans-serif;
+
+}
+
+.cloud-left {
+    position: absolute;
+}
+
+.cloud-right {
+    position: relative;
+    left: 230px;
+    top: 40px;
+}
+
+html {
+    min-width: 630px;
+}
+
+.skill-row {
+    width: 600px;
+    margin: 100px auto 100px auto;
+    text-align: left;
+    line-height: 2;
+}
+
+.computer-image {
+    width: 10rem;
+    float: left;
+    margin-right: 30px;
+}
+
+.chilli-image {
+    width: 10rem;
+    float: right;
+    margin-left: 30px;
+}
+
+.profile {
+    margin-top: 20px;
+}
+
+.intro {
+    width: 40%;
+    margin: auto;
+    line-height: 2;
+}
+
+hr {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border: hidden;
+    border-top: 6px dotted #EAF6F6;
+    width: 6%;
+}
+
+.bottom-container {
+    background-color: #66BFBF;
+    margin-top: 30px;
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 40%;
+    padding-right: 40%;
+}
+
+a {
+    color: #11999E;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #EAF6F6
+}
