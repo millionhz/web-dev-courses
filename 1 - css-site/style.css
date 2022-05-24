@@ -84,15 +84,12 @@ hr {
     background-color: #66BFBF;
     margin-top: 30px;
     padding: 50px;
-    display: flex;
-    justify-content: space-between;
-    padding-left: 40%;
-    padding-right: 40%;
 }
 
 a {
     color: #11999E;
     text-decoration: none;
+    padding: 0 10px;
 }
 
 a:hover {
