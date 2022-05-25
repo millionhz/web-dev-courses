@@ -45,7 +45,7 @@ h3 {
 
 .feature-icon {
     padding: 20px;
-    color: #ef8172;
+    color: #ec6c5b;
 }
 
 .feature-icon:hover {
@@ -63,24 +63,27 @@ h3 {
 }
 
 #testimonials {
-    padding: 7% 15%;
-    background-color: #ef8172;
+    background-color: #ff4c68;
     color: white;
+}
+
+.carousel-data {
+    padding: 7% 18%;
 
 }
 
-.testimonials-image {
+.testimonial-image {
     width: 100px;
     margin: 20px;
 }
 
 h2 {
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: 3rem;
 }
 
 #press {
-    background-color: #ef8172;
+    background-color: #ff4c68;
     text-align: center;
     padding-bottom: 3%;
 }
