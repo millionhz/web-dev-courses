@@ -1,0 +1,39 @@
+#title {
+    background-color: #ff4c68;
+}
+
+h1 {
+    font-family: "Montserrat";
+    line-height: 1.5;
+    font-size: 3.5rem;
+    font-weight: 900;
+}
+
+#title {
+    padding: 3% 15%;
+}
+
+body {
+    font-family: 'Montserrat';
+}
+
+.name {
+    font-size: 2rem;
+    font-family: 'Ubuntu';
+    font-weight: bold;
+}
+
+.doggy {
+    transform: rotate(20deg);
+    padding-top: 70px;
+    overflow: hidden;
+    width: 60%;
+}
+
+.nav-item {
+    padding-right: 30px;
+}
+
+.nav-link {
+    font-size: 1rem;
+}
