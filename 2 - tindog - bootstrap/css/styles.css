@@ -37,3 +37,27 @@ body {
 .nav-link {
     font-size: 1rem;
 }
+
+h3 {
+    font-weight: bold;
+}
+
+.features {
+    padding: 100px 60px;
+}
+
+.feature-icon {
+    padding: 20px;
+    color: #ef8172;
+}
+
+.feature-icon:hover {
+    color: #ff4c68;
+}
+
+.feature-text {
+    padding: 5%;
+    margin-bottom: 60px;
+    font-weight: bold;
+    color: #8f8f8f
+}
