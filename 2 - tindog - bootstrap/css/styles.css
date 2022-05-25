@@ -6,7 +6,7 @@
 h1 {
     font-family: "Montserrat";
     line-height: 1.5;
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: 900;
 }
 
@@ -40,7 +40,7 @@ h3 {
 }
 
 #features {
-    padding: 7% 15%;
+    padding: 7% 0;
 }
 
 .feature-icon {
@@ -53,11 +53,11 @@ h3 {
 }
 
 .feature-item {
-    padding: 30px;
+    padding: 0 30px;
 }
 
 .feature-text {
-    padding: 5%;
+    padding: 10%;
     font-weight: bold;
     color: #8f8f8f
 }
