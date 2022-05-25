@@ -1,5 +1,6 @@
 #title {
     background-color: #ff4c68;
+    padding: 3% 15%;
 }
 
 h1 {
@@ -7,10 +8,6 @@ h1 {
     line-height: 1.5;
     font-size: 3.5rem;
     font-weight: 900;
-}
-
-#title {
-    padding: 3% 15%;
 }
 
 body {
@@ -42,8 +39,8 @@ h3 {
     font-weight: bold;
 }
 
-.features {
-    padding: 100px 60px;
+#features {
+    padding: 7% 15%;
 }
 
 .feature-icon {
@@ -55,9 +52,40 @@ h3 {
     color: #ff4c68;
 }
 
+.feature-item {
+    padding: 30px;
+}
+
 .feature-text {
     padding: 5%;
-    margin-bottom: 60px;
     font-weight: bold;
     color: #8f8f8f
+}
+
+#testimonials {
+    padding: 7% 15%;
+    background-color: #ef8172;
+    color: white;
+
+}
+
+.testimonials-image {
+    width: 100px;
+    margin: 20px;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+#press {
+    background-color: #ef8172;
+    text-align: center;
+    padding-bottom: 3%;
+}
+
+.press-logo {
+    width: 15%;
+    margin: 20px 20px 50px 20px;
 }
