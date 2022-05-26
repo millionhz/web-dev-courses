@@ -22,7 +22,7 @@ body {
 
 .doggy {
     transform: rotate(20deg);
-    padding-top: 70px;
+    padding-top: 50px;
     overflow: hidden;
     width: 60%;
 }
@@ -37,6 +37,10 @@ body {
 
 h3 {
     font-weight: bold;
+}
+
+.download-buttons {
+    margin: 10px
 }
 
 #features {
@@ -99,4 +103,17 @@ h2 {
 #pricing {
     padding: 7% 7%;
     text-align: center;
+}
+
+@media (max-width: 990px) {
+    .doggy {
+        padding: 30px 0px;
+        overflow: hidden;
+        width: 60%;
+        transform: rotate(0);
+    }
+
+    #title {
+        text-align: center;
+    }
 }
