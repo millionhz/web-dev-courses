@@ -1,11 +1,9 @@
 function getNextStep() {
-  const colors = ["green", "red", "yellow", "blue"];
   return colors[Math.floor(Math.random() * 3)];
 }
 
-function playSound(fileName) {
-  const sound = new Audio(`./sounds/${fileName}.mp3`);
-  sound.play();
+function playSound(color) {
+  audioFiles[color].play();
 }
 
 function gameOver() {
@@ -22,7 +20,11 @@ function gameOver() {
 function animateButton(color) {
   playSound(color);
   $(`#${color}`).fadeOut(300).fadeIn(300);
-  return new Promise((resolve) => setTimeout(resolve, 600));
+  return delay(600)
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function animateNewPattern() {
@@ -31,12 +33,13 @@ async function animateNewPattern() {
   }
 }
 
-function nextLevel() {
+async function nextLevel() {
   patternList.push(getNextStep());
   currentMoveCount = 0;
 
   levelTitle.text(`Level ${patternList.length}`);
 
+  await delay(1000);
   animateNewPattern();
 
   enableKeyboard = false;
@@ -50,7 +53,7 @@ function manageInput(color) {
     playSound(color);
 
     if (currentMoveCount === patternList.length) {
-      setTimeout(nextLevel, 1000);
+      nextLevel();
     }
   } else {
     gameOver();
@@ -59,6 +62,16 @@ function manageInput(color) {
 
 const levelTitle = $("#level-title");
 const body = $("body");
+const colors = ["green", "red", "yellow", "blue"];
+
+const audioFiles = {
+  green: new Audio("./sounds/green.mp3"),
+  red: new Audio("./sounds/red.mp3"),
+  yellow: new Audio("./sounds/yellow.mp3"),
+  blue: new Audio("./sounds/blue.mp3"),
+  wrong: new Audio("./sounds/wrong.mp3"),
+};
+
 let enableKeyboard = true;
 let enableButton = false;
 let patternList = [];
