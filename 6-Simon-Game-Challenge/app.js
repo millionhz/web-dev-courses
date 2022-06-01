@@ -1,3 +1,20 @@
+const levelTitle = $('#level-title');
+const body = $('body');
+const colors = ['green', 'red', 'yellow', 'blue'];
+
+const audioFiles = {
+  green: new Audio('./sounds/green.mp3'),
+  red: new Audio('./sounds/red.mp3'),
+  yellow: new Audio('./sounds/yellow.mp3'),
+  blue: new Audio('./sounds/blue.mp3'),
+  wrong: new Audio('./sounds/wrong.mp3'),
+};
+
+let enableKeyboard = true;
+let enableButton = false;
+let patternList = [];
+let currentMoveCount = 0;
+
 function getNextStep() {
   return colors[Math.floor(Math.random() * 3)];
 }
@@ -7,28 +24,30 @@ function playSound(color) {
 }
 
 function gameOver() {
-  body.addClass("game-over");
-  playSound("wrong");
-  levelTitle.text("Game Over, Press Any Key To Restart");
-  setTimeout(() => body.removeClass("game-over"), 300);
+  body.addClass('game-over');
+  playSound('wrong');
+  levelTitle.text('Game Over, Press Any Key To Restart');
+  setTimeout(() => body.removeClass('game-over'), 300);
 
   enableKeyboard = true;
   enableButton = false;
   patternList = [];
 }
 
+function delay(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 function animateButton(color) {
   playSound(color);
   $(`#${color}`).fadeOut(300).fadeIn(300);
-  return delay(600)
-}
-
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return delay(600);
 }
 
 async function animateNewPattern() {
-  for (let color of patternList) {
+  for (const color of patternList) {
     await animateButton(color);
   }
 }
@@ -48,7 +67,7 @@ async function nextLevel() {
 
 function manageInput(color) {
   if (patternList[currentMoveCount] === color) {
-    currentMoveCount++;
+    currentMoveCount += 1;
 
     playSound(color);
 
@@ -60,42 +79,25 @@ function manageInput(color) {
   }
 }
 
-const levelTitle = $("#level-title");
-const body = $("body");
-const colors = ["green", "red", "yellow", "blue"];
-
-const audioFiles = {
-  green: new Audio("./sounds/green.mp3"),
-  red: new Audio("./sounds/red.mp3"),
-  yellow: new Audio("./sounds/yellow.mp3"),
-  blue: new Audio("./sounds/blue.mp3"),
-  wrong: new Audio("./sounds/wrong.mp3"),
-};
-
-let enableKeyboard = true;
-let enableButton = false;
-let patternList = [];
-let currentMoveCount = 0;
-
 $(document).keypress(() => {
   if (enableKeyboard) {
     nextLevel();
   }
 });
 
-$(".btn").on("pointerdown", (event) => {
+$('.btn').on('pointerdown', (event) => {
   if (enableButton) {
-    event.target.classList.add("pressed");
+    event.target.classList.add('pressed');
   }
 });
 
-$(".btn").on("pointerup", (event) => {
+$('.btn').on('pointerup', (event) => {
   if (enableButton) {
-    event.target.classList.remove("pressed");
+    event.target.classList.remove('pressed');
   }
 });
 
-$(".btn").click((event) => {
+$('.btn').click((event) => {
   if (enableButton) {
     manageInput(event.target.id);
   }
