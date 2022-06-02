@@ -34,24 +34,31 @@ function getGeoLocation(city) {
     });
   });
 }
-  );
+
+function getWeather(city) {
+  return new Promise((resolve, reject) => {
+    getGeoLocation(city)
+      .then((val) => {
+        const { lat, lon } = val[0];
+        return getWeatherData(lat, lon);
+      })
+      .then((val) => {
+        resolve(val);
+      })
+      .catch(() => {
+        reject();
+      });
+  });
 }
 
-app.get('/', (req, res) => {
-  https.get(geocodingApi('lahore'), (geocodingRes) => {
-    geocodingRes.on('data', (data) => {
-      const jsonData = JSON.parse(data)[0];
-      const { lat, lon } = jsonData;
-
-      getWeatherData(lat, lon)
-        .then((val) => {
-          res.send(val);
-        })
-        .catch(() => {
-          res.sendStatus(500);
-        });
+app.get('/', (request, response) => {
+  getWeather('lahore')
+    .then((val) => {
+      response.send(val);
+    })
+    .catch(() => {
+      response.sendStatus(500);
     });
-  });
 });
 
 app.listen(3000);
