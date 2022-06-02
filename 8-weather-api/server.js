@@ -12,17 +12,28 @@ const weatherDataApi = (lat, lon) =>
   `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APPID}&units=metric`;
 
 function getWeatherData(lat, lon) {
-  return new Promise(
-    (resolve) => {
-      https.get(weatherDataApi(lat, lon), (response) => {
-        response.on('data', (data) => {
-          resolve(JSON.parse(data));
-        });
+  return new Promise((resolve, reject) => {
+    setTimeout(reject, TIMEOUT);
+
+    https.get(weatherDataApi(lat, lon), (response) => {
+      response.on('data', (data) => {
+        resolve(JSON.parse(data));
       });
-    },
-    (reject) => {
-      setTimeout(reject, TIMEOUT);
-    }
+    });
+  });
+}
+
+function getGeoLocation(city) {
+  return new Promise((resolve, reject) => {
+    setTimeout(reject, TIMEOUT);
+
+    https.get(geocodingApi(city), (response) => {
+      response.on('data', (data) => {
+        resolve(JSON.parse(data));
+      });
+    });
+  });
+}
   );
 }
 
