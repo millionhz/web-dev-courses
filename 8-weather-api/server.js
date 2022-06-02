@@ -15,11 +15,13 @@ function getWeatherData(lat, lon) {
   return new Promise((resolve, reject) => {
     setTimeout(reject, TIMEOUT);
 
-    https.get(weatherDataApi(lat, lon), (response) => {
+    const request = https.get(weatherDataApi(lat, lon), (response) => {
       response.on('data', (data) => {
         resolve(JSON.parse(data));
       });
     });
+
+    request.on('error', () => reject());
   });
 }
 
@@ -27,11 +29,13 @@ function getGeoLocation(city) {
   return new Promise((resolve, reject) => {
     setTimeout(reject, TIMEOUT);
 
-    https.get(geocodingApi(city), (response) => {
+    const request = https.get(geocodingApi(city), (response) => {
       response.on('data', (data) => {
         resolve(JSON.parse(data));
       });
     });
+
+    request.on('error', () => reject());
   });
 }
 
