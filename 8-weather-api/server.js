@@ -5,7 +5,6 @@ const http = require('http');
 const app = express();
 const APPID = '622895359404ccf3308b0f539b5ed718';
 const TIMEOUT = 10000;
-const ipAddrs = new Map();
 
 const ipApi = (ipAddr) => `http://ip-api.com/json/${ipAddr}?fields=lat,lon`;
 
@@ -30,10 +29,6 @@ function getGeolocation(ipAddr) {
   return new Promise((resolve, reject) => {
     setTimeout(reject, TIMEOUT);
 
-    if (ipAddr === '::1') {
-      ipAddr = '192.206.151.131';
-    }
-
     const request = http.get(ipApi(ipAddr), (response) => {
       response.on('data', (data) => {
         const parsedData = JSON.parse(data);
@@ -48,17 +43,10 @@ function getGeolocation(ipAddr) {
 }
 
 function getWeather(ipAddr) {
-  if (ipAddrs.get(ipAddr)) {
-    const [lat, lon] = ipAddrs.get(ipAddr);
-    return getWeatherData(lat, lon);
-  }
-
   return new Promise((resolve, reject) => {
     getGeolocation(ipAddr)
       .then((val) => {
         const [lat, lon] = val;
-
-        ipAddrs.set(ipAddr, [lat, lon]);
 
         return getWeatherData(lat, lon);
       })
@@ -72,7 +60,8 @@ function getWeather(ipAddr) {
 }
 
 app.get('/', (request, response) => {
-  getWeather(request.ip)
+  const ipAddr = request.headers['x-forwarded-for'];
+  getWeather(ipAddr)
     .then((val) => {
       response.send(val);
     })
@@ -81,4 +70,4 @@ app.get('/', (request, response) => {
     });
 });
 
-app.listen(3000);
+app.listen(process.env.PORT);
