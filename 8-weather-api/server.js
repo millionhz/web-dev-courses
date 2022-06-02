@@ -4,6 +4,7 @@ const https = require('https');
 const app = express();
 const APPID = '622895359404ccf3308b0f539b5ed718';
 const TIMEOUT = 10000;
+const cities = new Map();
 
 const geocodingApi = (city) =>
   `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${APPID}`;
@@ -40,10 +41,18 @@ function getGeoLocation(city) {
 }
 
 function getWeather(city) {
+  if (cities.get(city)) {
+    const { lat, lon } = cities.get(city);
+    return getWeatherData(lat, lon);
+  }
+
   return new Promise((resolve, reject) => {
     getGeoLocation(city)
       .then((val) => {
         const { lat, lon } = val[0];
+
+        cities.set(city, { lat, lon });
+
         return getWeatherData(lat, lon);
       })
       .then((val) => {
