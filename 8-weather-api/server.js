@@ -1,13 +1,13 @@
 const express = require('express');
 const https = require('https');
+const http = require('http');
 
 const app = express();
 const APPID = '622895359404ccf3308b0f539b5ed718';
 const TIMEOUT = 10000;
-const cities = new Map();
+const ipAddrs = new Map();
 
-const geocodingApi = (city) =>
-  `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${APPID}`;
+const ipApi = (ipAddr) => `http://ip-api.com/json/${ipAddr}?fields=lat,lon`;
 
 const weatherDataApi = (lat, lon) =>
   `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APPID}&units=metric`;
@@ -26,32 +26,39 @@ function getWeatherData(lat, lon) {
   });
 }
 
-function getGeoLocation(city) {
+function getGeolocation(ipAddr) {
   return new Promise((resolve, reject) => {
     setTimeout(reject, TIMEOUT);
 
-    const request = https.get(geocodingApi(city), (response) => {
+    if (ipAddr === '::1') {
+      ipAddr = '192.206.151.131';
+    }
+
+    const request = http.get(ipApi(ipAddr), (response) => {
       response.on('data', (data) => {
-        resolve(JSON.parse(data));
+        const parsedData = JSON.parse(data);
+        resolve([parsedData.lat, parsedData.lon]);
       });
     });
 
-    request.on('error', () => reject());
+    request.on('error', () => {
+      reject();
+    });
   });
 }
 
-function getWeather(city) {
-  if (cities.get(city)) {
-    const { lat, lon } = cities.get(city);
+function getWeather(ipAddr) {
+  if (ipAddrs.get(ipAddr)) {
+    const [lat, lon] = ipAddrs.get(ipAddr);
     return getWeatherData(lat, lon);
   }
 
   return new Promise((resolve, reject) => {
-    getGeoLocation(city)
+    getGeolocation(ipAddr)
       .then((val) => {
-        const { lat, lon } = val[0];
+        const [lat, lon] = val;
 
-        cities.set(city, { lat, lon });
+        ipAddrs.set(ipAddr, [lat, lon]);
 
         return getWeatherData(lat, lon);
       })
@@ -65,7 +72,7 @@ function getWeather(city) {
 }
 
 app.get('/', (request, response) => {
-  getWeather('lahore')
+  getWeather(request.ip)
     .then((val) => {
       response.send(val);
     })
