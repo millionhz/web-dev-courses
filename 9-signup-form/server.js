@@ -7,6 +7,8 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
 const signupPage = path.join(__dirname, 'public', 'signup.html');
+const successPage = path.join(__dirname, 'public', 'success.html');
+const failurePage = path.join(__dirname, 'public', 'failure.html');
 
 const mailChimp = {
   apiKey: process.env.MAILCHIMP_KEY,
@@ -45,12 +47,18 @@ app.post('/', (req, res) => {
 
   submitUser(firstName, lastName, email).then(
     (val) => {
-      res.redirect('/');
+      res.sendFile(successPage);
     },
-    (reason) => {
-      res.status(500).send('submit request failed');
+    (error) => {
+      // https://axios-http.com/docs/handling_errors
+
+      if (error.response.data.status === 400) {
+        res.sendFile(successPage);
+      } else {
+        res.sendFile(failurePage);
+      }
     }
   );
 });
 
-app.listen(3000);
+app.listen(process.env.PORT);
