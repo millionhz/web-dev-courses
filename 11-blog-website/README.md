@@ -1,0 +1,1 @@
+# Project moved to [millionhz/minimal-blog](https://github.com/millionhz/minimal-blog.git)
