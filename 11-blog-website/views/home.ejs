@@ -18,6 +18,11 @@
         lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a
         iaculis at erat pellentesque adipiscing.
       </p>
+
+      <% journal.forEach((post) => { %>
+      <h1><%= post.title %></h1>
+      <p><%= post.content %></p>
+      <% }); %>
     </div>
 
     <%- include('./footer.ejs') %>
