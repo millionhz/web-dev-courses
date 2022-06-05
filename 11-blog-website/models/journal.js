@@ -1,4 +1,4 @@
-const journal = [
+const posts = [
   {
     title: 'Day 1',
     content:
@@ -11,4 +11,4 @@ const journal = [
   },
 ];
 
-module.exports = journal;
+module.exports.posts = posts;
