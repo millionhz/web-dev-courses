@@ -12,3 +12,6 @@ const posts = [
 ];
 
 module.exports.posts = posts;
+
+module.exports.getPost = (title) =>
+  posts.filter((post) => post.title.toLowerCase() === title.toLowerCase())[0];

@@ -6,6 +6,7 @@ const errorPage = require('./middlewares/error');
 const indexRouter = require('./routes/index');
 const aboutRouter = require('./routes/about');
 const contactRouter = require('./routes/contact');
+const postRouter = require('./routes/post');
 
 const app = express();
 
@@ -18,8 +19,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/about', aboutRouter);
 app.use('/contact', contactRouter);
+app.use('/post', postRouter);
 
 app.use(errorPage);
 
 app.listen(process.env.PORT);
-

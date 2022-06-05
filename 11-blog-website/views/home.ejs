@@ -20,7 +20,7 @@
       </p>
 
       <% posts.forEach((post) => { %>
-      <h1><%= post.title %></h1>
+      <h1><a href="/post/<%= post.title %>"><%= post.title %></a></h1>
       <p><%= post.content %></p>
       <% }); %>
     </div>
