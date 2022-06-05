@@ -20,8 +20,18 @@
       </p>
 
       <% posts.forEach((post) => { %>
-      <h1><a href="/post/<%= post.title %>"><%= post.title %></a></h1>
-      <p><%= post.content %></p>
+      <h1><%= post.title %></h1>
+      <p>
+        <% if (post.content.length > 100) { %>
+        <!---->
+        <%= post.content.slice(0,100) %>...
+        <a href="/post/<%= post.title %>">Read more</a>
+        <!---->
+        <% } else { %>
+        <!---->
+        <%= post.content %> <a href="/post/<%= post.title %>">Go to post</a>
+        <% } %>
+      </p>
       <% }); %>
     </div>
 
