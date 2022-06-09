@@ -43,12 +43,15 @@ async function initDB() {
 }
 
 async function getItems() {
-  const items = await Item.find({});
-  return items.map((item) => item.item);
+  return Item.find({});
 }
 
 function insertItem(item) {
   return new Item({ item }).save();
+}
+
+function deleteItem(_id) {
+  return Item.deleteOne({ _id });
 }
 
 app.get('/', (req, res) => {
@@ -67,6 +70,17 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   const { newTodoItem } = req.body;
   insertItem(newTodoItem)
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch((err) => {
+      console.log('incorrect item');
+    });
+});
+
+app.post('/delete', (req, res) => {
+  const { id } = req.body;
+  deleteItem(id)
     .then(() => {
       res.redirect('/');
     })
