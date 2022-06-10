@@ -36,14 +36,13 @@ const defaults = [
   { item: 'Hit the + button to add items' },
 ];
 
-async function instantiateList(name) {
+function instantiateList(name) {
   const newList = new List({
     name,
     items: defaults,
   });
 
-  await newList.save();
-  return newList.items;
+  return newList.save();
 }
 
 async function getItems(name) {
@@ -53,7 +52,8 @@ async function getItems(name) {
     return Promise.resolve(list.items);
   }
 
-  return instantiateList(name);
+  const newList = await instantiateList(name);
+  return newList.items;
 }
 
 async function insertItem(name, item) {
