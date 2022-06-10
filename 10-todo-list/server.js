@@ -66,8 +66,12 @@ async function insertItem(name, item) {
   return list.save();
 }
 
-function deleteItem(_id) {
-  return Item.deleteOne({ _id }).exec();
+async function deleteItem(name, _id) {
+  const list = (await List.find({ name }))[0];
+
+  list.items = list.items.filter((item) => item._id.toString() !== _id);
+
+  return list.save();
 }
 
 app.get('/', (req, res) => {
@@ -98,15 +102,13 @@ app.post('/:category', (req, res) => {
   });
 });
 
-app.post('/delete', (req, res) => {
+app.post('/:category/delete', (req, res) => {
+  const name = req.params.category;
   const { id } = req.body;
-  deleteItem(id)
-    .then(() => {
-      res.redirect('/');
-    })
-    .catch((err) => {
-      console.log('incorrect item');
-    });
+
+  deleteItem(name, id).then(() => {
+    res.redirect(`/${name}`);
+  });
 });
 
 mongoose
