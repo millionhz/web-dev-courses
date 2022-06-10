@@ -68,9 +68,7 @@ async function insertItem(name, item) {
 
 async function deleteItem(name, _id) {
   const list = await List.findOne({ name });
-
-  list.items = list.items.filter((item) => item._id.toString() !== _id);
-
+  list.items.id(_id).remove();
   return list.save();
 }
 
