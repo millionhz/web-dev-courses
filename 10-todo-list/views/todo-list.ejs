@@ -22,14 +22,14 @@
     <div class="box">
       <% for (let item of todoItems) { %>
       <div class="item">
-        <form action=<%= `/${title}/delete` %> method="post">
+        <form action=<%= `/${name}/delete` %> method="post">
           <button class="delete-button" name="id" value=<%= item._id %> type="submit">X</button>
         </form>
         <p><%= item.item %></p>
       </div>
       <% } %>
 
-      <form action=<%= `/${title}` %> method="post" class="item">
+      <form action=<%= `/${name}` %> method="post" class="item">
         <input
           type="text"
           name="newTodoItem"
