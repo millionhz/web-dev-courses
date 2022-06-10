@@ -47,7 +47,7 @@ async function instantiateList(name) {
 }
 
 async function getItems(name) {
-  const list = (await List.find({ name }))[0];
+  const list = await List.findOne({ name });
 
   if (list) {
     return Promise.resolve(list.items);
@@ -57,7 +57,7 @@ async function getItems(name) {
 }
 
 async function insertItem(name, item) {
-  const list = (await List.find({ name }))[0];
+  const list = await List.findOne({ name });
 
   list.items.push({
     item,
@@ -67,7 +67,7 @@ async function insertItem(name, item) {
 }
 
 async function deleteItem(name, _id) {
-  const list = (await List.find({ name }))[0];
+  const list = await List.findOne({ name });
 
   list.items = list.items.filter((item) => item._id.toString() !== _id);
 
