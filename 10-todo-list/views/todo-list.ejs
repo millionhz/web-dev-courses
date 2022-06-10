@@ -22,10 +22,8 @@
     <div class="box">
       <% for (let item of todoItems) { %>
       <div class="item">
-        <form action="/delete" method="post">
-          <!-- prettier-ignore -->
-          <input type="checkbox" name="id" value=<%= item._id %>
-          onChange="this.form.submit()"/>
+        <form action=<%= `/${title}/delete` %> method="post">
+          <button class="delete-button" name="id" value=<%= item._id %> type="submit">X</button>
         </form>
         <p><%= item.item %></p>
       </div>
@@ -39,7 +37,7 @@
           autocomplete="off"
           autofocus
         />
-        <button type="submit">+</button>
+        <button class="add-button" type="submit">+</button>
       </form>
     </div>
   </body>
