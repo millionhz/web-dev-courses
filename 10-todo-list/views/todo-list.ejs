@@ -16,7 +16,7 @@
 
   <body>
     <div class="box">
-      <h1 id="heading"><%= date %></h1>
+      <h1 id="heading"><%= title %></h1>
     </div>
 
     <div class="box">
@@ -31,7 +31,7 @@
       </div>
       <% } %>
 
-      <form action="/" method="post" class="item">
+      <form action=<%= `/${title}` %> method="post" class="item">
         <input
           type="text"
           name="newTodoItem"

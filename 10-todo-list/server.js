@@ -19,35 +19,51 @@ const itemSchema = new mongoose.Schema({
   },
 });
 
-const Item = mongoose.model('Item', itemSchema);
+const listSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    unique: true,
+  },
+  items: {
+    type: [itemSchema],
+  },
+});
 
-function getDate() {
-  const date = new Date();
-  return date.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+const List = mongoose.model('list', listSchema);
+
+const defaults = [
+  { item: 'Welcome to your new Todolist' },
+  { item: 'Hit the + button to add items' },
+];
+
+async function instantiateList(name) {
+  const newList = new List({
+    name,
+    items: defaults,
   });
+
+  await newList.save();
+  return newList.items;
 }
 
-async function initDB() {
-  Item.find({}).then((data) => {
-    if (!data.length) {
-      Item.insertMany([
-        { item: 'Welcome to your todolist!' },
-        { item: 'Hit the + button to add new item.' },
-      ]);
-    }
+async function getItems(name) {
+  const list = (await List.find({ name }))[0];
+
+  if (list) {
+    return Promise.resolve(list.items);
+  }
+
+  return instantiateList(name);
+}
+
+async function insertItem(name, item) {
+  const list = (await List.find({ name }))[0];
+
+  list.items.push({
+    item,
   });
-}
 
-function getItems() {
-  return Item.find({}).exec();
-}
-
-function insertItem(item) {
-  return new Item({ item }).save();
+  return list.save();
 }
 
 function deleteItem(_id) {
@@ -55,27 +71,31 @@ function deleteItem(_id) {
 }
 
 app.get('/', (req, res) => {
-  getItems()
+  res.redirect('/primary');
+});
+
+app.get('/:category', (req, res) => {
+  const name = req.params.category;
+
+  getItems(name)
     .then((items) => {
       res.render('todo-list', {
-        date: getDate(),
+        title: name,
         todoItems: items,
       });
     })
     .catch(() => {
-      res.status(404).send('Database query failed');
+      res.sendStatus(500);
     });
 });
 
-app.post('/', (req, res) => {
+app.post('/:category', (req, res) => {
   const { newTodoItem } = req.body;
-  insertItem(newTodoItem)
-    .then(() => {
-      res.redirect('/');
-    })
-    .catch((err) => {
-      console.log('incorrect item');
-    });
+  const name = req.params.category;
+
+  insertItem(name, newTodoItem).then(() => {
+    res.redirect(`/${name}`);
+  });
 });
 
 app.post('/delete', (req, res) => {
@@ -92,7 +112,6 @@ app.post('/delete', (req, res) => {
 mongoose
   .connect(mongoURL)
   .then(() => {
-    initDB();
     app.listen(process.env.PORT, () => {
       console.log(`listening on ${process.env.PORT}`);
     });
