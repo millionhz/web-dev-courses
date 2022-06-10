@@ -42,8 +42,8 @@ async function initDB() {
   });
 }
 
-async function getItems() {
-  return Item.find({});
+function getItems() {
+  return Item.find({}).exec();
 }
 
 function insertItem(item) {
@@ -51,7 +51,7 @@ function insertItem(item) {
 }
 
 function deleteItem(_id) {
-  return Item.deleteOne({ _id });
+  return Item.deleteOne({ _id }).exec();
 }
 
 app.get('/', (req, res) => {
