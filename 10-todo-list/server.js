@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const upperFirst = require('lodash').upperFirst;
+const { capitalize } = require('lodash');
 
 const app = express();
 
@@ -83,7 +83,7 @@ app.get('/:category', (req, res) => {
   getItems(name)
     .then((items) => {
       res.render('todo-list', {
-        title: upperFirst(name),
+        title: capitalize(name),
         name,
         todoItems: items,
       });
