@@ -40,4 +40,8 @@ articleSchema.statics.updateArticleByTitle = function (title, updates) {
   return this.updateOne({ title }, updates, { runValidators: true }).exec();
 };
 
+articleSchema.statics.deleteArticleByTitle = function (title) {
+  return this.deleteOne({ title }).exec();
+};
+
 module.exports = mongoose.model('article', articleSchema);

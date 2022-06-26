@@ -62,6 +62,11 @@ router
           message: 'failed to insert',
         });
       });
+  })
+  .delete((req, res) => {
+    Article.deleteArticleByTitle(req.params.title).then(() => {
+      res.sendStatus(200);
+    });
   });
 
 module.exports = router;
