@@ -50,11 +50,9 @@ router
     });
   })
   .patch((req, res) => {
-    Article.updateArticleByTitle(req.params.title, req.body.content)
+    Article.updateArticleByTitle(req.params.title, req.body)
       .then(() => {
-        Article.getArticleByTitle(req.params.title).then((article) => {
-          res.json(article);
-        });
+        res.sendStatus(200);
       })
       .catch(() => {
         const status = 400;
