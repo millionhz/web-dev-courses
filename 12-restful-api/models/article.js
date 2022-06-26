@@ -36,4 +36,8 @@ articleSchema.statics.getArticleByTitle = function (title) {
   return this.findOne({ title }).exec();
 };
 
+articleSchema.statics.updateArticleByTitle = function (title, content) {
+  return this.updateOne({ title }, { content }, { runValidators: true }).exec();
+};
+
 module.exports = mongoose.model('article', articleSchema);
