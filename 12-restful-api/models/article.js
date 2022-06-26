@@ -1,8 +1,27 @@
 const mongoose = require('mongoose');
 
 const articleSchema = mongoose.Schema({
-  title: String,
-  content: String,
+  title: {
+    type: String,
+    maxLength: [100, 'Max length exceeded'],
+    required: [
+      function () {
+        return this.title !== '';
+      },
+      'Title can not be empty',
+    ],
+    trim: true,
+  },
+  content: {
+    type: String,
+    required: [
+      function () {
+        return this.content !== '';
+      },
+      'Content can not be empty',
+    ],
+    trim: true,
+  },
 });
 
 articleSchema.statics.getArticles = function () {
