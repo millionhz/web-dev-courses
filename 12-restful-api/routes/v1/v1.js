@@ -32,4 +32,19 @@ router.post('/articles', (req, res) => {
     });
 });
 
+router.get('/articles/:title', (req, res) => {
+  Article.getArticleByTitle(req.params.title).then((article) => {
+    if (article) {
+      res.send(article);
+    } else {
+      const status = 404;
+      res.status(status).json({
+        status,
+        error: 'article_not_found',
+        message: 'requested article was not found',
+      });
+    }
+  });
+});
+
 module.exports = router;

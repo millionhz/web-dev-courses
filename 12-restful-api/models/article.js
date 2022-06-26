@@ -32,4 +32,8 @@ articleSchema.statics.addArticle = function (title, content) {
   return this({ title, content }).save();
 };
 
+articleSchema.statics.getArticleByTitle = function (title) {
+  return this.findOne({ title }).exec();
+};
+
 module.exports = mongoose.model('article', articleSchema);
