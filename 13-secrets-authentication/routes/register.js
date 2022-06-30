@@ -10,9 +10,10 @@ router.get('/', (req, res) => {
 router.post('/', (req, res, next) => {
   User.addUser(req.body.email, req.body.password)
     .then(() => {
-      res.redirect('/register');
+      res.redirect('/login');
     })
     .catch((err) => {
+      res.redirect('/register');
       next(err);
     });
 });

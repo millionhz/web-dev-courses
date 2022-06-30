@@ -1,18 +1,5 @@
 const mongoose = require('mongoose');
-const validate = require('validate.js');
-
-const constraints = {
-  email: {
-    type: 'string',
-    email: true,
-  },
-  password: {
-    type: 'string',
-    length: {
-      minimum: 6,
-    },
-  },
-};
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -20,10 +7,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator(email) {
-        return validate({ email }, constraints) === undefined;
-      },
-      message: 'email validation failed',
+      validator: validator.isEmail,
+      message: 'email invalid',
     },
   },
   password: {
@@ -31,9 +16,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(password) {
-        return validate({ password }, constraints) === undefined;
+        return validator.isLength(password, { min: 6 });
       },
-      message: 'password validation failed',
+      message: 'password too short',
     },
   },
 });
