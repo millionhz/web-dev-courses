@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
 
 const app = express();
@@ -21,6 +22,15 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.listen(3000, () => {
-  console.log(`listening on 3000`);
-});
+mongoose
+  .connect(process.env.DB)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`listening on ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log('database connection failed');
+    console.log(err);
+    mongoose.disconnect();
+  });
