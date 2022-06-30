@@ -27,9 +27,19 @@ userSchema.statics.addUser = function (email, password) {
   return new this({ email, password }).save();
 };
 
+userSchema.statics.authenticate = function (email, password) {
+  return this.findOne({ email }).then((user) => {
+    if (user && user.password === password) {
+      return 1;
+    }
+    
+    throw new Error('invalid user email or password');
+  });
+};
+
 async function devInit() {
   const User = mongoose.model('user', userSchema);
-  User.deleteMany({}).exec();
+  // User.deleteMany({}).exec();
   module.exports = User;
 }
 
