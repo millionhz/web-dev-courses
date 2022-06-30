@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res, next) => {
   User.addUser(req.body.email, req.body.password)
     .then(() => {
-      res.redirect('/login');
+      res.render('secret');
     })
     .catch((err) => {
       res.redirect('/register');
