@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const encrypt = require('mongoose-encryption');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -29,18 +30,23 @@ userSchema.plugin(encrypt, {
   encryptedFields: ['password'],
 });
 
-userSchema.statics.addUser = function (email, password) {
-  return new this({ email, password }).save();
+userSchema.statics.addUser = async function (email, password) {
+  const hash = await bcrypt.hash(password, 10);
+  return new this({ email, password: hash }).save();
 };
 
-userSchema.statics.authenticate = function (email, password) {
-  return this.findOne({ email }).then((user) => {
-    if (user && user.password === password) {
-      return 1;
-    }
+userSchema.statics.authenticate = async function (email, password) {
+  const user = await this.findOne({ email });
 
-    throw new Error('invalid user email or password');
-  });
+  if (!user) {
+    throw new Error('user email not registered');
+  }
+
+  if (!(await bcrypt.compare(password, user.password))) {
+    throw new Error('incorrect password');
+  }
+
+  return true;
 };
 
 async function devInit() {
