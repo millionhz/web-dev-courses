@@ -42,7 +42,8 @@ userSchema.statics.authenticate = async function (email, password) {
     throw new Error('user email not registered');
   }
 
-  if (!(await bcrypt.compare(password, user.password))) {
+  const passwordMatched = await bcrypt.compare(password, user.password);
+  if (!passwordMatched) {
     throw new Error('incorrect password');
   }
 
