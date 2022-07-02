@@ -11,11 +11,14 @@ router.post('/', (req, res, next) => {
   const { email, password } = req.body;
 
   User.authenticate(email, password)
-    .then(() => {
-      res.render('secrets');
+    .then((verified) => {
+      if (verified) {
+        res.render('secrets');
+      } else {
+        res.redirect('/login');
+      }
     })
     .catch((err) => {
-      res.redirect('/login');
       next(err);
     });
 });
