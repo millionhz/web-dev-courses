@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
       res.render('secrets');
     })
     .catch((err) => {
-      res.redirect('/register');
+      res.send('registration failed');
       next(err);
     });
 });
