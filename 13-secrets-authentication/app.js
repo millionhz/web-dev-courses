@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const secretsRouter = require('./routes/secrets');
+const logoutRouter = require('./routes/logout');
 
 const app = express();
 const mongoConnection = mongoose.connect(process.env.DB);
@@ -24,7 +25,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: {},
+    cookie: { maxAge: 63115200000 },
     store: MongoStore.create({
       clientPromise: mongoConnection.then((self) =>
         self.connection.getClient()
@@ -39,6 +40,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/secrets', secretsRouter);
+app.use('/logout', logoutRouter);
 
 mongoConnection
   .then(() => {
