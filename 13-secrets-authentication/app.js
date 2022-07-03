@@ -10,6 +10,7 @@ const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const secretsRouter = require('./routes/secrets');
 const logoutRouter = require('./routes/logout');
+const submitRouter = require('./routes/submit');
 
 const app = express();
 const mongoConnection = mongoose.connect(process.env.DB);
@@ -34,7 +35,7 @@ app.use(
   })
 );
 
-app.use(passport.initialize())
+app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
@@ -42,6 +43,7 @@ app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/secrets', secretsRouter);
 app.use('/logout', logoutRouter);
+app.use('/submit', submitRouter);
 
 mongoConnection
   .then(() => {
