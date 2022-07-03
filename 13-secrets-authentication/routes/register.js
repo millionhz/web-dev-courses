@@ -16,7 +16,7 @@ router.post(
         next();
       })
       .catch((err) => {
-        res.send('registration failed');
+        res.redirect('/register');
         next(err);
       });
   },
