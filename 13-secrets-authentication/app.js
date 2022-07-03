@@ -11,6 +11,7 @@ const registerRouter = require('./routes/register');
 const secretsRouter = require('./routes/secrets');
 
 const app = express();
+const mongoConnection = mongoose.connect(process.env.DB);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -23,7 +24,12 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.DB }),
+    cookie: {},
+    store: MongoStore.create({
+      clientPromise: mongoConnection.then((self) =>
+        self.connection.getClient()
+      ),
+    }),
   })
 );
 
@@ -34,8 +40,7 @@ app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/secrets', secretsRouter);
 
-mongoose
-  .connect(process.env.DB)
+mongoConnection
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log(`listening on ${process.env.PORT}`);
