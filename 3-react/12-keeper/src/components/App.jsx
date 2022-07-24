@@ -13,10 +13,20 @@ export default function App() {
     setNotes((prevNotes) => prevNotes.filter((val) => val.key !== key));
   }
 
+  function addNote(title, content) {
+    const newNote = {
+      key: Math.round(Math.random() * 10000),
+      title,
+      content,
+    };
+
+    setNotes((prevNotes) => [...prevNotes, newNote]);
+  }
+
   return (
     <div>
       <Header />
-      <CreateArea />
+      <CreateArea onButtonClick={addNote} />
       {notes.map((note) => (
         <Note
           key={note.key}
