@@ -34,7 +34,7 @@ function getTitle(activity) {
   return 'Cycling' + postfix;
 }
 
-function getrunningItemHTML(distance, time, spm) {
+function getRunningItemHTML(distance, time, spm) {
   const listItem = document.createElement('li');
   listItem.classList.add('workout');
   listItem.classList.add('workout--running');
@@ -117,7 +117,7 @@ function renderWorkoutForm(lat, lng) {
   form.dataset.lat = lat;
   form.dataset.lng = lng;
   form.classList.remove('hidden');
-  inputDuration.focus();
+  inputDistance.focus();
 }
 
 function loadMap(latitude, longitude) {
@@ -130,35 +130,61 @@ function loadMap(latitude, longitude) {
   });
 }
 
-function configMap() {
+function init() {
   navigator.geolocation.getCurrentPosition((data) => {
     loadMap(data.coords.latitude, data.coords.longitude);
+    getWorkouts()?.map((workout) => renderWorkout(workout));
   });
 }
 
-configMap();
+async function saveWorkout(newWorkout) {
+  const workouts = getWorkouts() || [];
+
+  workouts.push(newWorkout);
+  localStorage.setItem('workouts', JSON.stringify(workouts));
+}
+
+function getWorkouts() {
+  return JSON.parse(localStorage.getItem('workouts'));
+}
+
+function renderWorkout(workout) {
+  let listItem =
+    workout.type === 'running'
+      ? getRunningItemHTML(workout.distance, workout.duration, workout.cadence)
+      : getCyclingItemHTML(
+          workout.distance,
+          workout.duration,
+          workout.elevation
+        );
+
+  containerWorkouts.append(listItem);
+  addMapMarker(workout.lat, workout.lng, workout.type);
+}
+
+init();
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const lat = form.dataset.lat;
-  const lng = form.dataset.lng;
+  const workout = {
+    lat: form.dataset.lat,
+    lng: form.dataset.lng,
+    type: inputType.value,
+    distance: inputDistance.value,
+    duration: inputDuration.value,
+    cadence: inputCadence.value,
+    elevation: inputElevation.value,
+  };
 
-  const type = inputType.value;
-  const distance = inputDistance.value;
-  const duration = inputDuration.value;
-  const cadence = inputCadence.value;
-  const elevation = inputElevation.value;
+  inputDistance.value =
+    inputDuration.value =
+    inputCadence.value =
+    inputElevation.value =
+      0;
 
-  let listItem =
-    type === 'running'
-      ? getrunningItemHTML(distance, duration, cadence)
-      : getCyclingItemHTML(distance, duration, elevation);
-
-  containerWorkouts.append(listItem);
-
-  addMapMarker(lat, lng, type);
-
+  renderWorkout(workout);
+  saveWorkout(workout);
   form.classList.add('hidden');
 });
 
