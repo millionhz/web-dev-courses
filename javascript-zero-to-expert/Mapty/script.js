@@ -34,66 +34,6 @@ function getTitle(activity) {
   return 'Cycling' + postfix;
 }
 
-function getRunningItemHTML(distance, time, spm) {
-  const listItem = document.createElement('li');
-  listItem.classList.add('workout');
-  listItem.classList.add('workout--running');
-  listItem.innerHTML = `
-    <h2 class="workout__title">${getTitle('running')}</h2>
-    <div class="workout__details">
-      <span class="workout__icon">🏃‍♂️</span>
-      <span class="workout__value">${distance}</span>
-      <span class="workout__unit">km</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">⏱</span>
-      <span class="workout__value">${time}</span>
-      <span class="workout__unit">min</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">⚡️</span>
-      <span class="workout__value">${(time / distance).toFixed(1)}</span>
-      <span class="workout__unit">min/km</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">🦶🏼</span>
-      <span class="workout__value">${spm}</span>
-      <span class="workout__unit">spm</span>
-    </div>
-`;
-  return listItem;
-}
-
-function getCyclingItemHTML(distance, time, elevation) {
-  const listItem = document.createElement('li');
-  listItem.classList.add('workout');
-  listItem.classList.add('workout--cycling');
-  listItem.innerHTML = `
-    <h2 class="workout__title">${getTitle('cycling')}</h2>
-    <div class="workout__details">
-      <span class="workout__icon">🚴‍♀️</span>
-      <span class="workout__value">${distance}</span>
-      <span class="workout__unit">km</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">⏱</span>
-      <span class="workout__value">${time}</span>
-      <span class="workout__unit">min</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">⚡️</span>
-      <span class="workout__value">${(distance / time).toFixed(1)}</span>
-      <span class="workout__unit">km/h</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">⛰</span>
-      <span class="workout__value">${elevation}</span>
-      <span class="workout__unit">m</span>
-    </div>
-`;
-  return listItem;
-}
-
 function addMapMarker(latitude, longitude, type) {
   const latlang = [latitude, longitude];
   const isRunning = type === 'running';
@@ -125,7 +65,6 @@ function loadMap(latitude, longitude) {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
   map.on('click', (e) => {
-    // addMapMarker(e.latlng.lat, e.latlng.lng);
     renderWorkoutForm(e.latlng.lat, e.latlng.lng);
   });
 }
@@ -149,14 +88,58 @@ function getWorkouts() {
 }
 
 function renderWorkout(workout) {
-  let listItem =
-    workout.type === 'running'
-      ? getRunningItemHTML(workout.distance, workout.duration, workout.cadence)
-      : getCyclingItemHTML(
-          workout.distance,
-          workout.duration,
-          workout.elevation
-        );
+  let titlePrefix;
+  let rate;
+  let detail;
+  let mainIcon;
+  let detailIcon;
+
+  if (workout.type === 'running') {
+    titlePrefix = 'Running';
+    rate = workout.duration / workout.distance;
+    detail = workout.cadence;
+    mainIcon = '🏃‍♂️';
+    detailIcon = '🦶🏼';
+  } else {
+    titlePrefix = 'Cycling';
+    rate = workout.distance / workout.duration;
+    detail = workout.elevation;
+    mainIcon = '🚴‍♀️';
+    detailIcon = '⛰';
+  }
+
+  const dateObj = new Date(workout.date);
+  const title = `${titlePrefix} on ${
+    months[dateObj.getMonth() - 1]
+  } ${dateObj.getDate()}`;
+
+  const listItem = document.createElement('li');
+  listItem.classList.add('workout');
+  listItem.classList.add(`workout--${workout.type}`);
+
+  listItem.innerHTML = `
+    <h2 class="workout__title">${title}</h2>
+    <div class="workout__details">
+      <span class="workout__icon">${mainIcon}</span>
+      <span class="workout__value">${workout.distance}</span>
+      <span class="workout__unit">km</span>
+    </div>
+    <div class="workout__details">
+      <span class="workout__icon">⏱</span>
+      <span class="workout__value">${workout.duration}</span>
+      <span class="workout__unit">min</span>
+    </div>
+    <div class="workout__details">
+      <span class="workout__icon">⚡️</span>
+      <span class="workout__value">${rate.toFixed(1)}</span>
+      <span class="workout__unit">km/h</span>
+    </div>
+    <div class="workout__details">
+      <span class="workout__icon">${detailIcon}</span>
+      <span class="workout__value">${detail}</span>
+      <span class="workout__unit">m</span>
+    </div>
+`;
 
   containerWorkouts.append(listItem);
   addMapMarker(workout.lat, workout.lng, workout.type);
@@ -168,6 +151,7 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const workout = {
+    date: Date.now(),
     lat: form.dataset.lat,
     lng: form.dataset.lng,
     type: inputType.value,
