@@ -9,5 +9,7 @@ module.exports = {
   rules: {
     'arrow-body-style': [2, 'as-needed'],
     'func-names': 0,
+    'no-plusplus': 0,
   },
+  plugins: ['html', 'prettier'],
 };
