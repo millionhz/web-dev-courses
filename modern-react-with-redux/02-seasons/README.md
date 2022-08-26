@@ -1,4 +1,4 @@
-# Class Components
+# Class Components, State and Lifecycle
 
 The App uses:
 
