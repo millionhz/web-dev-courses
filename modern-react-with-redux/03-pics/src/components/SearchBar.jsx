@@ -6,24 +6,24 @@ class SearchBar extends React.Component {
     this.state = { value: '' };
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({ value: e.target.value });
-  }
+  };
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
 
   render() {
     return (
       <div className="ui segment">
-        <form className="ui form" onSubmit={(e) => this.handleSubmit(e)}>
+        <form className="ui form" onSubmit={this.handleSubmit}>
           <div className="field">
             <label>Image Search</label>
             <input
               type="text"
               value={this.state.value}
-              onChange={(e) => this.handleChange(e)}
+              onChange={this.handleChange}
             />
           </div>
         </form>
