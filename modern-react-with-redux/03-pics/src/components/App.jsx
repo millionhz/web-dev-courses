@@ -1,21 +1,41 @@
 import React from 'react';
+import unsplash from '../api/unsplash';
 import SearchBar from './SearchBar';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { term: '' };
+    this.state = {
+      images: [],
+    };
   }
 
-  search = (term) => {
-    this.setState({ term });
+  getImagesByTerm = async (term) => {
+    const res = await unsplash.get('/search/photos', {
+      params: {
+        query: term,
+      },
+    });
+
+    const images = res.data.results.map((image) => ({
+      url: image.urls.small,
+      id: image.id,
+    }));
+
+    this.setState({
+      images,
+    });
   };
 
   render() {
     return (
       <div className="ui container" style={{ marginTop: '20px' }}>
-        <SearchBar onSubmit={this.search} />
-        <h1>{this.state.term}</h1>
+        <SearchBar onSubmit={this.getImagesByTerm} />
+        <ul>
+          {this.state.images.map((image) => (
+            <li key={image.id}>{image.url}</li>
+          ))}
+        </ul>
       </div>
     );
   }
