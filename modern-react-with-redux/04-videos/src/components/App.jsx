@@ -15,8 +15,6 @@ class App extends React.Component {
     });
 
     this.setState({ videoList: res.data.items });
-
-    console.log(res.data.items);
   };
 
   render() {
