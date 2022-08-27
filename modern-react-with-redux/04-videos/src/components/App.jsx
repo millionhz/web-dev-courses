@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
 import youtube from '../api/youtube';
+import VideoIframe from './VideoIframe';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,13 +32,7 @@ class App extends React.Component {
         </div>
         <div className="ui grid">
           <div className="ten wide column">
-            <h1>{currentVideo}</h1>
-            {/* <iframe
-              src="https://www.youtube.com/embed/OlStmta0Vh4"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            /> */}
+            {currentVideo && <VideoIframe video={currentVideo} />}
           </div>
           <div className="six wide column">
             <VideoList videos={videoList} onItemClick={this.setCurrentVideo} />
