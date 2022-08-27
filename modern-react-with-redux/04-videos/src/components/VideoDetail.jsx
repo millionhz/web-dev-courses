@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function VideoIframe({ video }) {
+function VideoDetail({ video }) {
   const { snippet, player } = video;
   const iframeHtml = {
     __html: player.embedHtml,
   };
 
   return (
-    <div>
-      <div dangerouslySetInnerHTML={iframeHtml} />
-      <h1>{snippet.title}</h1>
+    <div className="ui segment">
+      <div className="ui embed" dangerouslySetInnerHTML={iframeHtml} />
+      <h1 className="ui header">{snippet.title}</h1>
       <p>{snippet.channelTitle}</p>
     </div>
   );
 }
 
-VideoIframe.propTypes = {
+VideoDetail.propTypes = {
   video: PropTypes.object.isRequired,
 };
 
-export default VideoIframe;
+export default VideoDetail;

@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
 import youtube from '../api/youtube';
-import VideoIframe from './VideoIframe';
+import VideoIframe from './VideoDetail';
 
 class App extends React.Component {
   constructor(props) {
