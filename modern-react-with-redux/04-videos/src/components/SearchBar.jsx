@@ -22,14 +22,17 @@ class SearchBar extends React.Component {
 
   render() {
     const { value } = this.state;
+    const { placeholder } = this.props;
 
     return (
       <div className="ui segment">
         <form className="ui form" onSubmit={this.handleSubmit}>
           <div className="field">
+            <label htmlFor="search-bar">Video Search</label>
             <input
+              name="search-bar"
               type="text"
-              placeholder="Search"
+              placeholder={placeholder ?? 'Search'}
               value={value}
               onChange={this.handleChange}
             />
@@ -42,6 +45,7 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   onSubmit: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 export default SearchBar;

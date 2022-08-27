@@ -53,7 +53,7 @@ class App extends React.Component {
     return (
       <div className="ui container">
         <div className="center aligned">
-          <SearchBar onSubmit={this.searchVideos} />
+          <SearchBar placeholder="The Weeknd" onSubmit={this.searchVideos} />
         </div>
         <div className="ui grid">
           <div className="ten wide column">
