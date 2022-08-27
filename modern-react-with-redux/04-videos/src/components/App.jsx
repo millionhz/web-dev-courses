@@ -55,15 +55,18 @@ class App extends React.Component {
 
     return (
       <div className="ui container">
-        <div className="center aligned">
-          <SearchBar placeholder="The Weeknd" onSubmit={this.searchVideos} />
-        </div>
-        <div className="ui grid">
+        <SearchBar placeholder="The Weeknd" onSubmit={this.searchVideos} />
+        <div className="ui grid" style={{ marginTop: '1rem' }}>
           <div className="ten wide column">
             {currentVideo && <VideoIframe video={currentVideo} />}
           </div>
           <div className="six wide column">
-            <VideoList videos={videoList} onItemClick={this.setCurrentVideo} />
+            {videoList.length > 0 && (
+              <VideoList
+                videos={videoList}
+                onItemClick={this.setCurrentVideo}
+              />
+            )}
           </div>
         </div>
       </div>
