@@ -10,13 +10,38 @@ class App extends React.Component {
     this.state = { videoList: [], currentVideo: null };
   }
 
-  setCurrentVideo = (video) => {
-    this.setState({ currentVideo: video });
+  async componentDidMount() {
+    const res = await youtube.get('/videos', {
+      params: {
+        part: 'snippet,player',
+        chart: 'mostPopular',
+      },
+    });
+
+    this.setState({
+      currentVideo: res.data.items[0],
+    });
+  }
+
+  setCurrentVideo = async ({ id }) => {
+    const res = await youtube.get('/videos', {
+      params: {
+        part: 'snippet,player',
+        id: id.videoId,
+      },
+    });
+
+    this.setState({ currentVideo: res.data.items[0] });
   };
 
   searchVideos = async (term) => {
     const res = await youtube.get('/search', {
-      params: { q: term, part: 'snippet', type: 'video' },
+      params: {
+        q: term,
+        part: 'snippet',
+        type: 'video',
+        videoEmbeddable: true,
+      },
     });
 
     this.setState({ videoList: res.data.items });
