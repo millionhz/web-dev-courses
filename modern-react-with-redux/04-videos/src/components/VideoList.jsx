@@ -4,7 +4,7 @@ import VideoItem from './VideoItem';
 
 function VideoList({ videos, onItemClick }) {
   return (
-    <div className="ui segment items">
+    <div className="ui items">
       {videos.map((video) => (
         <VideoItem key={video.id.videoId} video={video} onClick={onItemClick} />
       ))}

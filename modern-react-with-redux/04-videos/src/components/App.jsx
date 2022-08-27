@@ -50,8 +50,18 @@ class App extends React.Component {
     this.setState({ videoList: res.data.items });
   };
 
+  renderVideoList() {
+    const { videoList } = this.state;
+
+    if (!videoList.length) {
+      return <p>No Search Results</p>;
+    }
+
+    return <VideoList videos={videoList} onItemClick={this.setCurrentVideo} />;
+  }
+
   render() {
-    const { videoList, currentVideo } = this.state;
+    const { currentVideo } = this.state;
 
     return (
       <div className="ui container">
@@ -61,12 +71,7 @@ class App extends React.Component {
             {currentVideo && <VideoIframe video={currentVideo} />}
           </div>
           <div className="six wide column">
-            {videoList.length > 0 && (
-              <VideoList
-                videos={videoList}
-                onItemClick={this.setCurrentVideo}
-              />
-            )}
+            <div className="ui segment">{this.renderVideoList()}</div>
           </div>
         </div>
       </div>
