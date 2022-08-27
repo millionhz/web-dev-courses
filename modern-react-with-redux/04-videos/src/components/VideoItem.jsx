@@ -22,7 +22,7 @@ function VideoItem({ video, onClick }) {
 }
 
 VideoItem.propTypes = {
-  video: PropTypes.object,
+  video: PropTypes.object, // youtube data api search object
   onClick: PropTypes.func,
 };
 

@@ -7,7 +7,10 @@ import VideoIframe from './VideoIframe';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { videoList: [], currentVideo: null };
+    this.state = {
+      videoList: [],
+      currentVideo: null, // youtube data api video object
+    };
   }
 
   async componentDidMount() {
