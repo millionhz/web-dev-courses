@@ -3,15 +3,14 @@ import SearchBar from './SearchBar';
 import VideoList from './VideoList';
 import youtube from '../api/youtube';
 
-// eslint-ignore-next-line
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { videoList: [], currentVideo: 'something' };
+    this.state = { videoList: [], currentVideo: null };
   }
 
-  setCurrentVideo = (id) => {
-    this.setState({ currentVideo: id });
+  setCurrentVideo = (video) => {
+    this.setState({ currentVideo: video });
   };
 
   searchVideos = async (term) => {

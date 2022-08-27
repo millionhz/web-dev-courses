@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function VideoItem({ id, title, channel, thumbnail, onClick }) {
+function VideoItem({ video, onClick }) {
+  const { snippet } = video;
+
   return (
-    <div className="item" onClick={() => onClick(id)}>
+    <div className="item" onClick={() => onClick(video)}>
       <div className="ui small image">
-        <img alt="" src={thumbnail} />
+        <img alt="" src={snippet.thumbnails.medium.url} />
       </div>
       <div className="content">
-        <div className="header">{title}</div>
+        <div className="header">{snippet.title}</div>
         <div className="meta">
-          <span className="channel">{channel}</span>
+          <span className="channel">{snippet.channelTitle}</span>
         </div>
       </div>
     </div>
@@ -18,10 +20,7 @@ function VideoItem({ id, title, channel, thumbnail, onClick }) {
 }
 
 VideoItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  channel: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
+  video: PropTypes.object,
   onClick: PropTypes.func,
 };
 

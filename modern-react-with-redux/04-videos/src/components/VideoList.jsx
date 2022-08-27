@@ -5,15 +5,8 @@ import VideoItem from './VideoItem';
 function VideoList({ videos, onItemClick }) {
   return (
     <div className="ui items">
-      {videos.map(({ id, snippet }) => (
-        <VideoItem
-          key={id.videoId}
-          id={id.videoId}
-          title={snippet.title}
-          channel={snippet.channelTitle}
-          thumbnail={snippet.thumbnails.medium.url}
-          onClick={onItemClick}
-        />
+      {videos.map((video) => (
+        <VideoItem key={video.id.videoId} video={video} onClick={onItemClick} />
       ))}
     </div>
   );
