@@ -9,7 +9,7 @@ The App uses:
 
 ## API keys
 
-The app requires a file named `keys.js` at the **root** of the project containing unsplash API credentials.
+The app requires a file named `keys.js` at the **root** of the `src` containing unsplash API credentials.
 
 `keys.js` template:
 ```js
