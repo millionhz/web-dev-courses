@@ -1,20 +1,33 @@
 import React from 'react';
 import SearchBar from './SearchBar';
-
-function searchVideos(term) {
-  console.log(term);
-}
+import VideoList from './VideoList';
+import youtube from '../api/youtube';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { videoList: [] };
   }
 
+  searchVideos = async (term) => {
+    const res = await youtube.get('/search', {
+      params: { q: term, part: 'snippet' },
+    });
+
+    this.setState({ videoList: res.data.items });
+
+    console.log(res.data.items);
+  };
+
   render() {
+    const { videoList } = this.state;
+
     return (
-      <div className="ui center aligned container">
-        <SearchBar onSubmit={searchVideos} />
+      <div className="ui container">
+        <div className="center aligned">
+          <SearchBar onSubmit={this.searchVideos} />
+        </div>
+        <VideoList videos={videoList} />
       </div>
     );
   }
