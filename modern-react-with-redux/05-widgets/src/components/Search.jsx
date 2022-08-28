@@ -23,23 +23,17 @@ function Search() {
     setTerm(newValue);
   }
 
-  function onFormSubmit(e) {
-    e.preventDefault();
-  }
-
   return (
     <div className="ui form">
-      <form onSubmit={onFormSubmit}>
-        <div className="field">
-          <input
-            type="text"
-            placeholder="Search"
-            value={term}
-            onChange={(e) => onValueChange(e.target.value)}
-            autoFocus
-          />
-        </div>
-      </form>
+      <div className="field">
+        <input
+          type="text"
+          placeholder="Search"
+          value={term}
+          onChange={(e) => onValueChange(e.target.value)}
+          autoFocus
+        />
+      </div>
       <div className="ui celled list">
         {results.map(({ title, snippet, pageid }) => (
           <div key={pageid} className="item">
