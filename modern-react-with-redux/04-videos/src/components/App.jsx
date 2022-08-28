@@ -65,7 +65,7 @@ class App extends React.Component {
 
     return (
       <div className="ui container">
-        <SearchBar placeholder="The Weeknd" onSubmit={this.searchVideos} />
+        <SearchBar placeholder="" onSubmit={this.searchVideos} />
         <div className="ui grid" style={{ marginTop: '1rem' }}>
           <div className="ten wide column">
             {currentVideo && <VideoIframe video={currentVideo} />}
