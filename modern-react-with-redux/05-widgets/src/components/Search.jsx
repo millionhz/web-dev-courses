@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 async function getSearchResults(term) {
-  const res = await fetch(
+  return fetch(
     `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${term}&utf8=&format=json&origin=*`
-  );
-
-  const data = await res.json();
-  return data?.query?.search ?? [];
+  )
+    .then((res) => res.json())
+    .then((data) => data.query.search)
+    .catch(() => []);
 }
 
 function Search() {
