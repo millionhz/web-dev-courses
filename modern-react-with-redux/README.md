@@ -8,3 +8,4 @@
 | Seasons    | Class Components, State, Lifecycle Methods |
 | Pics       | Events, AJAX requests                      |
 | Videos     | (Youtube Clone Challenge)                  |
+| Wiki       |                                            |
