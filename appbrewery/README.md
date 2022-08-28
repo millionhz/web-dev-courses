@@ -1,4 +1,4 @@
-# Web Development Bootcamp
+# Appbrewery's Web Development Bootcamp
 
 ## HTML & CSS
 
