@@ -1,5 +1,5 @@
 import React from 'react';
-import Accordion from './Accordion';
+import Search from './Search';
 
 const devData = [
   {
@@ -15,7 +15,7 @@ const devData = [
 ];
 
 function App() {
-  return <Accordion list={devData} />;
+  return <Search />;
 }
 
 export default App;
