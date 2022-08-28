@@ -9,15 +9,21 @@ async function getSearchResults(term) {
     .catch(() => []);
 }
 
-function Search() {
+function Search({ searchDelay }) {
   const [term, setTerm] = useState('');
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    getSearchResults(term).then((results) => {
-      setResults(results);
-    });
-  }, [term]);
+    const timerId = setTimeout(() => {
+      getSearchResults(term).then((results) => {
+        setResults(results);
+      });
+    }, searchDelay);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term, searchDelay]);
 
   function onValueChange(newValue) {
     setTerm(newValue);
@@ -59,5 +65,9 @@ function Search() {
     </div>
   );
 }
+
+Search.defaultProps = {
+  searchDelay: 500,
+};
 
 export default Search;
