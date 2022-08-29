@@ -1,51 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: '' };
+function SearchBar({ placeholder, onSubmit }) {
+  const [value, setValue] = useState('');
+
+  function handleChange(e) {
+    setValue(e.target.value);
   }
 
-  handleChange = (e) => {
-    this.setState({ value: e.target.value });
-  };
-
-  handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
 
-    const { onSubmit } = this.props;
-    const { value } = this.state;
-
     onSubmit(value);
-  };
-
-  render() {
-    const { value } = this.state;
-    const { placeholder } = this.props;
-
-    return (
-      <div className="ui segment">
-        <form className="ui form" onSubmit={this.handleSubmit}>
-          <div className="field">
-            <label htmlFor="search-bar">Video Search</label>
-            <input
-              name="search-bar"
-              type="text"
-              placeholder={placeholder ?? 'Search'}
-              value={value}
-              onChange={this.handleChange}
-            />
-          </div>
-        </form>
-      </div>
-    );
   }
+
+  return (
+    <div className="ui segment">
+      <form className="ui form" onSubmit={handleSubmit}>
+        <div className="field">
+          <label htmlFor="search-bar">Video Search</label>
+          <input
+            name="search-bar"
+            type="text"
+            placeholder={placeholder}
+            value={value}
+            onChange={handleChange}
+          />
+        </div>
+      </form>
+    </div>
+  );
 }
 
 SearchBar.propTypes = {
-  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
+};
+
+SearchBar.defaultProps = {
+  placeholder: 'Search',
 };
 
 export default SearchBar;
