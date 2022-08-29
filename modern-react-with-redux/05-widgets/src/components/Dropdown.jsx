@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-function Dropdown({ title, options, selected, onSelectedChange }) {
+function Dropdown({ label, options, selected, onSelectedChange }) {
   const [open, setOpen] = useState(false);
   const ref = useRef();
 
@@ -46,12 +46,12 @@ function Dropdown({ title, options, selected, onSelectedChange }) {
       onClick={() => setOpen((prevOpen) => !prevOpen)}
     >
       <div className="field">
-        <label className="label">{title}</label>
+        <label className="label">{label}</label>
         <div
           className={`ui selection dropdown ${open ? 'visible active' : ''}`}
         >
           <i className="dropdown icon"></i>
-          <div className="text">{options[selected].label}</div>
+          <div className="text">{options[selected]?.label}</div>
           <div className={`menu ${open ? 'visible transition' : ''}`}>
             {renderSelections()}
           </div>
