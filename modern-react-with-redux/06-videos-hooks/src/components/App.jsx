@@ -1,32 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchBar from './SearchBar';
 import VideoList from './VideoList';
 import youtube from '../api/youtube';
 import VideoIframe from './VideoDetail';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      videoList: [],
-      currentVideo: null, // youtube data api video object
-    };
-  }
+function App() {
+  const [videoList, setVideoList] = useState([]);
+  const [currentVideo, setCurrentVideo] = useState(null);
 
-  async componentDidMount() {
-    const res = await youtube.get('/videos', {
-      params: {
-        part: 'snippet,player',
-        chart: 'mostPopular',
-      },
-    });
+  useEffect(() => {
+    youtube
+      .get('/videos', {
+        params: {
+          part: 'snippet,player',
+          chart: 'mostPopular',
+        },
+      })
+      .then((res) => {
+        setCurrentVideo(res.data.items[0]);
+      });
+  }, []);
 
-    this.setState({
-      currentVideo: res.data.items[0],
-    });
-  }
-
-  setCurrentVideo = async ({ id }) => {
+  const onItemClick = async ({ id }) => {
     const res = await youtube.get('/videos', {
       params: {
         part: 'snippet,player',
@@ -34,10 +29,10 @@ class App extends React.Component {
       },
     });
 
-    this.setState({ currentVideo: res.data.items[0] });
+    setCurrentVideo(res.data.items[0]);
   };
 
-  searchVideos = async (term) => {
+  const searchVideos = async (term) => {
     const res = await youtube.get('/search', {
       params: {
         q: term,
@@ -47,36 +42,28 @@ class App extends React.Component {
       },
     });
 
-    this.setState({ videoList: res.data.items });
+    setVideoList(res.data.items);
   };
 
-  renderVideoList() {
-    const { videoList } = this.state;
-
-    if (!videoList.length) {
-      return <p>No Search Results</p>;
-    }
-
-    return <VideoList videos={videoList} onItemClick={this.setCurrentVideo} />;
-  }
-
-  render() {
-    const { currentVideo } = this.state;
-
-    return (
-      <div className="ui container">
-        <SearchBar placeholder="" onSubmit={this.searchVideos} />
-        <div className="ui grid" style={{ marginTop: '1rem' }}>
-          <div className="ten wide column">
-            {currentVideo && <VideoIframe video={currentVideo} />}
-          </div>
-          <div className="six wide column">
-            <div className="ui segment">{this.renderVideoList()}</div>
+  return (
+    <div className="ui container">
+      <SearchBar placeholder="" onSubmit={searchVideos} />
+      <div className="ui grid" style={{ marginTop: '1rem' }}>
+        <div className="ten wide column">
+          {currentVideo && <VideoIframe video={currentVideo} />}
+        </div>
+        <div className="six wide column">
+          <div className="ui segment">
+            {videoList.length > 0 ? (
+              <VideoList videos={videoList} onItemClick={onItemClick} />
+            ) : (
+              <p>No Search Results</p>
+            )}
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;
