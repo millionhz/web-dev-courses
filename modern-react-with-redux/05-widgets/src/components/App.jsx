@@ -4,6 +4,7 @@ import Accordion from './Accordion';
 import Search from './Search';
 import Route from './Route';
 import Dropdown from './Dropdown';
+import Header from './Header';
 
 const accordionList = [
   {
@@ -28,6 +29,7 @@ function App() {
 
   return (
     <>
+      <Header />
       <Route path="/">
         <Accordion list={accordionList} />
       </Route>
