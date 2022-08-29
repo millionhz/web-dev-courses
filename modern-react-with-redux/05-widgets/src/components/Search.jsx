@@ -15,9 +15,11 @@ function Search({ searchDelay }) {
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      getSearchResults(term).then((results) => {
-        setResults(results);
-      });
+      if (term) {
+        getSearchResults(term).then((results) => {
+          setResults(results);
+        });
+      }
     }, searchDelay);
 
     return () => {

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Translate from './Translate';
 import Accordion from './Accordion';
 import Search from './Search';
+import Route from './Route';
+import Dropdown from './Dropdown';
 
 const accordionList = [
   {
@@ -15,17 +17,36 @@ const accordionList = [
   },
 ];
 
+const options = [
+  { value: 'red', label: 'Saturated Red' },
+  { value: 'blue', label: 'Dark Blue' },
+  { value: 'green', label: 'Boring Green' },
+];
+
 function App() {
-  function getComponent() {
-    if (window.location.pathname === '/')
-      return <Accordion list={accordionList} />;
+  const [selection, setSelection] = useState(0);
 
-    if (window.location.pathname === '/search') return <Search />;
-
-    if (window.location.pathname === '/translate') return <Translate />;
-  }
-
-  return getComponent();
+  return (
+    <>
+      <Route path="/">
+        <Accordion list={accordionList} />
+      </Route>
+      <Route path="/search">
+        <Search />
+      </Route>
+      <Route path="/translate">
+        <Translate />
+      </Route>
+      <Route path="/dropdown">
+        <Dropdown
+          options={options}
+          selected={selection}
+          onSelectedChange={setSelection}
+          title="Select a Color"
+        />
+      </Route>
+    </>
+  );
 }
 
 export default App;
