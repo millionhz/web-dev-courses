@@ -8,6 +8,7 @@ function VideoDetail({ video }) {
     <div className="ui segment">
       <div
         className="ui embed"
+        // eslint-disable-next-line
         dangerouslySetInnerHTML={{ __html: player.embedHtml }}
       />
       <h1 className="ui header">{snippet.title}</h1>
