@@ -1,6 +1,7 @@
+import { combineReducers } from 'redux';
 import { type } from '../actions';
 
-export function songsReducer() {
+function songsReducer() {
   return [
     {
       title: 'Starboy',
@@ -17,10 +18,15 @@ export function songsReducer() {
   ];
 }
 
-export function selectSongReducer(currentSelectedSong = null, action) {
+function selectedSongReducer(currentSelectedSong = null, action) {
   if (action.type === type.SONG_SELECTED) {
     return action.payload;
   }
 
   return currentSelectedSong;
 }
+
+export default combineReducers({
+  songs: songsReducer,
+  selectedSong: selectedSongReducer,
+});
