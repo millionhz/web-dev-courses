@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 function SongDetail({ song }) {
   return (
@@ -15,4 +16,10 @@ function SongDetail({ song }) {
   );
 }
 
-export default SongDetail;
+function mapStateToProps(state) {
+  return {
+    song: state.selectedSong,
+  };
+}
+
+export default connect(mapStateToProps)(SongDetail);
