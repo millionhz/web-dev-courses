@@ -10,3 +10,4 @@
 | Videos         | (Youtube Clone Challenge)                    |
 | Widgets        | React Hooks, Debouncing, Client Side Routing |
 | Videos (Hooks) | (Youtube Clone Challenge with React Hooks)   |
+| Songs          | Redux                                        |
