@@ -1,10 +1,16 @@
 import React from 'react';
 
-function SongDetail() {
+function SongDetail({ song }) {
   return (
     <div className="ui segment container">
-      <h1>Title</h1>
-      <h3>Length</h3>
+      {song ? (
+        <>
+          <h1>{song.title}</h1>
+          <h3>{song.length}</h3>
+        </>
+      ) : (
+        <h1>No Song Selected</h1>
+      )}
     </div>
   );
 }
