@@ -1,7 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { selectCurrentSong } from './songSlice';
 
-function SongDetail({ song }) {
+function SongDetail() {
+  const song = useSelector(selectCurrentSong);
+
   return (
     <div className="ui segment container">
       {song ? (
@@ -16,10 +19,4 @@ function SongDetail({ song }) {
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    song: state.selectedSong,
-  };
-}
-
-export default connect(mapStateToProps)(SongDetail);
+export default SongDetail;

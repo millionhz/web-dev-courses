@@ -1,6 +1,6 @@
 import React from 'react';
-import SongDetail from './components/SongDetail';
-import SongList from './components/SongList';
+import SongDetail from './features/Songs/SongDetail';
+import SongList from './features/Songs/SongList';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
         <SongList />
       </div>
       <div className="column eight wide">
-        <SongDetail song={null} />
+        <SongDetail />
       </div>
     </div>
   );

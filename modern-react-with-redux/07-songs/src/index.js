@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import songSliceReducer from './features/Songs/songSlice';
+import App from './App';
 
-const store = createStore(reducers);
+const store = configureStore({
+  reducer: songSliceReducer,
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

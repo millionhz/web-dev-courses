@@ -1,8 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { selectSong } from '../actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectSongs, changeCurrentSong } from './songSlice';
 
-function SongList({ songs, selectSong }) {
+function SongList() {
+  const songs = useSelector(selectSongs);
+  const dispatch = useDispatch();
+
   return (
     <div className="ui segment container">
       <div className="ui divided items">
@@ -15,7 +18,7 @@ function SongList({ songs, selectSong }) {
               </div>
               <button
                 className="ui right floated primary button"
-                onClick={() => selectSong(song)}
+                onClick={() => dispatch(changeCurrentSong(song))}
               >
                 Select
               </button>
@@ -26,10 +29,4 @@ function SongList({ songs, selectSong }) {
   );
 }
 
-function mapStateToProps(state) {
-  return { songs: state.songs };
-}
-
-export default connect(mapStateToProps, {
-  selectSong,
-})(SongList);
+export default SongList;
