@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPosts } from '../api/jsonPlaceholder';
+import { selectPosts, setPosts } from '../slices/postsSlice';
+
 import Post from './Post';
 
 function PostList() {
-  const postObj = {
-    title: 'Title',
-    body: 'Body',
-    author: 'Author',
-  };
+  const dispatch = useDispatch();
+  const posts = useSelector(selectPosts);
+
+  useEffect(() => {
+    (async () => {
+      const posts = await getPosts();
+      dispatch(setPosts(posts.slice(0, 5)));
+    })();
+  }, [dispatch]);
 
   return (
     <div>
-      <Post {...postObj} />
-      <Post {...postObj} />
-      <Post {...postObj} />
+      {posts?.map((post) => {
+        return <Post key={post.id} {...post} />;
+      })}
     </div>
   );
 }
