@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts } from '../api/jsonPlaceholder';
-import { selectPosts, setPosts } from '../slices/postsSlice';
+import { selectPosts, fetchPosts } from '../slices/postsSlice';
 
 import Post from './Post';
 
@@ -10,9 +9,7 @@ function PostList() {
   const posts = useSelector(selectPosts);
 
   useEffect(() => {
-    getPosts().then((posts) => {
-      dispatch(setPosts(posts.slice(0, 5)));
-    });
+    dispatch(fetchPosts());
   }, [dispatch]);
 
   return (
