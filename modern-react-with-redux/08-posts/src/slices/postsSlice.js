@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const postsSlice = createSlice({
   name: 'posts',
@@ -20,8 +20,6 @@ export const selectPosts = (state) => state.posts;
 
 // action
 export const { addPosts, setPosts } = postsSlice.actions;
-
-createAsyncThunk();
 
 // reducer
 export default postsSlice.reducer;

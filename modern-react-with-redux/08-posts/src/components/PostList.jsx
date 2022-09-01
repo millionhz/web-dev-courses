@@ -10,10 +10,9 @@ function PostList() {
   const posts = useSelector(selectPosts);
 
   useEffect(() => {
-    (async () => {
-      const posts = await getPosts();
+    getPosts().then((posts) => {
       dispatch(setPosts(posts.slice(0, 5)));
-    })();
+    });
   }, [dispatch]);
 
   return (
