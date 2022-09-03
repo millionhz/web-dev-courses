@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPosts, fetchPostsAndUsers } from '../slices/postsSlice';
+import { selectPosts, fetchPosts } from '../slices/postsSlice';
 
 import Post from './Post';
 
@@ -9,7 +9,7 @@ function PostList() {
   const posts = useSelector(selectPosts);
 
   useEffect(() => {
-    dispatch(fetchPostsAndUsers());
+    dispatch(fetchPosts());
   }, [dispatch]);
 
   return (

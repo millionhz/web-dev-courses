@@ -11,3 +11,4 @@
 | Widgets        | React Hooks, Debouncing, Client Side Routing       |
 | Videos (Hooks) | (Youtube Clone Challenge with React Hooks)         |
 | Songs          | Redux (action, reducers, state), Provider, connect |
+| Posts          | Redux-Thunk, AJAX with Redux                       |
