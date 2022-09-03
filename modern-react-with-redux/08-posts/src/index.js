@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { configureStore } from '@reduxjs/toolkit';
 import App from './components/App';
 import { Provider } from 'react-redux';
-import postReducer from './slices/postsSlice';
-import { configureStore } from '@reduxjs/toolkit';
+import postsReducer from './slices/postsSlice';
 
-const store = configureStore({ reducer: postReducer });
+const store = configureStore({ reducer: postsReducer });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

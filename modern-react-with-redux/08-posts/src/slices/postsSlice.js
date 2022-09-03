@@ -28,21 +28,29 @@ export const selectUserById = (id) => (state) => state.users[id];
 export const { addPosts, setPosts, addUser } = postsSlice.actions;
 
 // thunk
+export function fetchPostsAndUsers() {
+  return async (dispatch, getState) => {
+    await dispatch(fetchPosts());
+    // wait for the posts
+
+    const userIds = getState().posts.map((post) => post.userId);
+    const uniqueUserIds = [...new Set(userIds)];
+
+    uniqueUserIds.forEach((id) => dispatch(fetchUserById(id)));
+  };
+}
+
 export function fetchPosts() {
-  return (dispatch) => {
-    getPosts().then((posts) => {
-      dispatch(setPosts(posts));
-    });
+  return async (dispatch) => {
+    const posts = await getPosts();
+    dispatch(setPosts(posts));
   };
 }
 
 export function fetchUserById(id) {
-  return (dispatch, getState) => {
-    if (getState().users[id]) return;
-
-    getUserById(id).then((user) => {
-      dispatch(addUser(user));
-    });
+  return async (dispatch) => {
+    const user = await getUserById(id);
+    dispatch(addUser(user));
   };
 }
 
