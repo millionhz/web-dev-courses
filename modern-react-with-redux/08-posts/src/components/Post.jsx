@@ -1,6 +1,7 @@
 import React from 'react';
+import UserHeader from './UserHeader';
 
-function Post({ title, body, author }) {
+function Post({ title, body, userId }) {
   return (
     <div className="item">
       <i className="large middle aligned icon user" />
@@ -8,6 +9,7 @@ function Post({ title, body, author }) {
         <div className="description"></div>
         <h2>{title}</h2>
         <p>{body}</p>
+        <UserHeader id={userId} />
       </div>
     </div>
   );
