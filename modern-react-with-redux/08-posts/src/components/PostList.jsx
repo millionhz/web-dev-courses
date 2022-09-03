@@ -13,7 +13,7 @@ function PostList() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="ui relaxed divided list">
       {posts?.map((post) => {
         return <Post key={post.id} {...post} />;
       })}

@@ -2,10 +2,13 @@ import React from 'react';
 
 function Post({ title, body, author }) {
   return (
-    <div>
-      <h1>{title}</h1>
-      <p>{body}</p>
-      <h3>{author}</h3>
+    <div className="item">
+      <i className="large middle aligned icon user" />
+      <div className="content">
+        <div className="description"></div>
+        <h2>{title}</h2>
+        <p>{body}</p>
+      </div>
     </div>
   );
 }
