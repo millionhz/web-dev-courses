@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function StreamCreate() {
-  return (
-    <div>StreamCreate</div>
-  )
+  return <div>StreamCreate</div>;
 }
 
-export default StreamCreate
+export default StreamCreate;
