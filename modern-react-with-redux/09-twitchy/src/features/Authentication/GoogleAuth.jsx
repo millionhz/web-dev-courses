@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { clientId } from '../keys';
+import { clientId } from '../../keys';
 
 const authState = {
   idle: 'idle',

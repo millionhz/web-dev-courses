@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import GoogleAuth from './GoogleAuth';
+import GoogleAuth from '../features/Authentication/GoogleAuth';
 
 function Header() {
   return (
