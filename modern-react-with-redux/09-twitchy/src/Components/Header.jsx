@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import GoogleAuth from './GoogleAuth';
 
 function Header() {
   return (
     <>
-      <div className="ui secondary pointing menu">
+      <div className="ui secondary pointing menu my-4">
         <Link to="/" className="item">
           Twitchy
         </Link>
@@ -12,6 +13,7 @@ function Header() {
           <Link to="/" className="item">
             Streams
           </Link>
+          <GoogleAuth />
         </div>
       </div>
       <Outlet />
