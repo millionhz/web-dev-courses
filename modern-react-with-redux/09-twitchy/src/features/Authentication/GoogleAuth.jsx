@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 import { clientId } from '../../keys';
 import { selectUser, login } from './userSlice';
 
@@ -17,7 +18,7 @@ function GoogleAuth() {
 
   const handleCredentialResponse = useCallback(
     (response) => {
-      dispatch(login(response.credential));
+      dispatch(login(jwtDecode(response.credential)));
       setState(authState.success);
     },
     [dispatch]

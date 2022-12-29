@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import jwtDecode from 'jwt-decode';
 
 const userSlice = createSlice({
   name: 'user',
@@ -10,8 +9,7 @@ const userSlice = createSlice({
   },
 });
 
-export const selectEmail = (state) =>
-  state.user ? jwtDecode(state.user).email : null;
+export const selectEmail = (state) => (state.user ? state.user.email : null);
 
 export const selectUser = (state) => state.user;
 
