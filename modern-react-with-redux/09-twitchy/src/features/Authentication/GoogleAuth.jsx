@@ -1,28 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import { clientId } from '../../keys';
-import { selectUser, login } from './userSlice';
-
-const authState = {
-  idle: 'idle',
-  processing: 'processing',
-  success: 'success',
-  failed: 'failed',
-};
+import { login, logout, selectUserId } from './userSlice';
 
 function GoogleAuth() {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const [state, setState] = useState(authState.idle);
+  const userId = useSelector(selectUserId);
 
   const handleCredentialResponse = useCallback(
     (response) => {
       dispatch(login(jwtDecode(response.credential)));
-      setState(authState.success);
     },
     [dispatch]
   );
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   useEffect(() => {
     window.google.accounts.id.initialize({
@@ -31,22 +26,30 @@ function GoogleAuth() {
       auto_select: true,
     });
 
+    window.google.accounts.id.prompt();
+  }, [handleCredentialResponse]);
+
+  useEffect(() => {
     window.google.accounts.id.renderButton(
       document.getElementById('buttonDiv'),
       { type: 'button', theme: 'outline', size: 'large', shape: 'circle' }
     );
+  });
 
-    window.google.accounts.id.prompt((notification) => {
-      const { processing, failed } = authState;
-      if (notification.isDisplayed()) {
-        setState(processing);
-      } else if (notification.isNotDisplayed()) {
-        setState(failed);
-      }
-    });
-  }, [handleCredentialResponse]);
+  if (userId) {
+    return (
+      <button
+        type="button"
+        className="item"
+        onClick={handleLogout}
+        style={{ cursor: 'pointer' }}
+      >
+        Logout
+      </button>
+    );
+  }
 
-  return state !== authState.processing && !user && <div id="buttonDiv" />;
+  return <div id="buttonDiv" />;
 }
 
 export default GoogleAuth;

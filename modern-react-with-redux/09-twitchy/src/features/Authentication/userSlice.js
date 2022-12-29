@@ -11,8 +11,6 @@ const userSlice = createSlice({
 
 export const selectUserId = (state) => (state.user ? state.user.sub : null);
 
-export const selectUser = (state) => state.user;
-
 export const { login, logout } = userSlice.actions;
 
 export default userSlice.reducer;
