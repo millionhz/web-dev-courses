@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { clientId } from '../../keys';
+import { selectUser, login } from './userSlice';
 
 const authState = {
   idle: 'idle',
@@ -9,13 +11,17 @@ const authState = {
 };
 
 function GoogleAuth() {
-  const [token, setToken] = useState(null);
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const [state, setState] = useState(authState.idle);
 
-  const handleCredentialResponse = (response) => {
-    setToken(response.credential);
-    setState(authState.success);
-  };
+  const handleCredentialResponse = useCallback(
+    (response) => {
+      dispatch(login(response.credential));
+      setState(authState.success);
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     window.google.accounts.id.initialize({
@@ -37,9 +43,9 @@ function GoogleAuth() {
         setState(failed);
       }
     });
-  }, []);
+  }, [handleCredentialResponse]);
 
-  return state !== authState.processing && !token && <div id="buttonDiv" />;
+  return state !== authState.processing && !user && <div id="buttonDiv" />;
 }
 
 export default GoogleAuth;
