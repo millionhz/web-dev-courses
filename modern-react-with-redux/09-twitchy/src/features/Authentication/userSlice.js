@@ -9,7 +9,7 @@ const userSlice = createSlice({
   },
 });
 
-export const selectEmail = (state) => (state.user ? state.user.email : null);
+export const selectUserId = (state) => (state.user ? state.user.sub : null);
 
 export const selectUser = (state) => state.user;
 
