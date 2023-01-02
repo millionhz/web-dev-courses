@@ -1,4 +1,16 @@
 # Twitchy
 
-This project covers:
-- React Router
+Incomplete Project
+
+## Implemented
+
+- Google Auth
+- Routes
+- Redux Store
+
+## Pending
+
+- JSON Server
+- Streaming Server
+- Forms
+- Streaming
